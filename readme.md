@@ -1,9 +1,9 @@
-# \<Project Name\> Scrum Team
+# Photo App Scrum Team
 ## Product Owner
-\<Team Member Name\>
+Cody Henderson
 ## Scrum Master
-\<Team Member Name\>
+Aiden Weyandt
 ## Developers
-- \<Team Member Name\>
-- \<Team Member Name\>
-- \<Team Member Name\>
+- Brian Saunders
+- Adam Barnes
+- Yannic Kimmel
