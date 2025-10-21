@@ -2,8 +2,12 @@
 ## Product Owner
 Cody Henderson
 ## Scrum Master
-Aiden Weyandt
+Aidan Weyandt
 ## Developers
 - Brian Saunders
 - Adam Barnes
 - Yannic Kimmel
+
+
+## Purpose
+- This is our demonstration of the creation of a Photo App Sprint. Scrum phisolpghy was used in the creation of this project
