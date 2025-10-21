@@ -1,0 +1,45 @@
+.user-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px;
+}
+
+.photo {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.photo img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.photo-info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.comments {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #eef;
+    border-radius: 5px;
+}
+
+.comment {
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.comment a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.comment a:hover {
+    text-decoration: underline;
+}

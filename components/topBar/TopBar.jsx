@@ -10,8 +10,26 @@ import './TopBar.css';
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      app_info: undefined
+    };
+  }
+  componentDidMount() {
+    this.handleAppInfoChange();
   }
 
+  handleAppInfoChange(){
+    const app_info = this.state.app_info;
+    if (app_info === undefined){
+        fetchModel("/test/info")
+            .then((response) =>
+            {
+                this.setState({
+                    app_info: response.data
+                });
+            });
+    }
+  }
   render() {
     return (
       <AppBar className="topbar-appBar" position="absolute">
@@ -26,3 +44,4 @@ class TopBar extends React.Component {
 }
 
 export default TopBar;
+

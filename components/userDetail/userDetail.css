@@ -1,0 +1,239 @@
+:root{
+    --bg: #f7f8fb;
+    --card-bg: #ffffff;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-600: #1e40af;
+    --border: #e6e9ef;
+    --success: #10b981;
+    --danger: #ef4444;
+    --radius: 12px;
+    --shadow: 0 6px 18px rgba(20,24,40,0.08);
+    --glass: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.user-detail {
+    background: var(--bg);
+    padding: 28px;
+    min-height: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-family-system);
+    color: #111827;
+}
+
+/* Centered container with subtle card */
+.user-detail__container {
+    max-width: 980px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+/* User card (left column) */
+.user-detail__card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.user-detail__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(20,24,40,0.12);
+}
+
+.user-detail__avatar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-detail__avatar {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #eef2ff, #f0fdf4);
+    border: 2px solid rgba(0,0,0,0.04);
+    display: inline-block;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 6px 12px rgba(16,24,40,0.06);
+    object-fit: cover;
+}
+
+/* When an <img> is placed inside avatar, make it fill */
+.user-detail__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Name and key metadata */
+.user-detail__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-detail__name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.user-detail__username {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+/* Details list */
+.user-detail__details {
+    display: grid;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #111827;
+}
+
+.user-detail__field {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(250,250,252,0.6), rgba(250,250,252,0.4));
+    border: 1px solid rgba(15,23,42,0.03);
+}
+
+.user-detail__field-label {
+    min-width: 90px;
+    color: var(--muted);
+    font-size: 0.88rem;
+    flex-shrink: 0;
+}
+
+.user-detail__field-value {
+    color: #111827;
+    font-weight: 600;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-size: 0.95rem;
+}
+
+/* Actions: switch to photos view */
+.user-detail__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    align-items: center;
+}
+
+.user-detail__photos-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    background: linear-gradient(180deg, var(--accent), var(--accent-600));
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    box-shadow: 0 8px 20px rgba(37,99,235,0.18);
+}
+
+.user-detail__photos-toggle:hover,
+.user-detail__photos-toggle:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(37,99,235,0.22);
+    outline: none;
+}
+
+.user-detail__photos-toggle[aria-pressed="true"],
+.user-detail__photos-toggle--active {
+    background: #fff;
+    color: var(--accent-600);
+    border: 1px solid var(--accent-600);
+    box-shadow: none;
+}
+
+/* Right column: content area (photos + details view) */
+.user-detail__view {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    min-height: 220px;
+}
+
+/* Section headings inside view */
+.user-detail__view h2 {
+    margin: 0 0 12px 0;
+    font-size: 1.05rem;
+    color: #0f172a;
+}
+
+/* Photos area (initially hidden until toggled) */
+.user-detail__photos-area {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .22s ease, transform .22s ease;
+    pointer-events: none;
+}
+
+.user-detail__photos-area.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Photo card */
+.user-detail__photo {
+    background: linear-gradient(180deg, #fff, #fbfdff);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(15,23,42,0.04);
+    box-shadow: 0 8px 18px rgba(12,18,31,0.06);
+    aspect-ratio: 1.5 / 1;
+    display: block;
+}
+
+.user-detail__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .22s ease;
+}
+
+.user-detail__photo:hover img {
+    transform: scale(1.03);
+}
+
+/* Empty / placeholder state */
+.user-detail__empty {
+    padding: 18px;
+    border-radius: 10px;
+    text-align: center;
+    color: var(--muted);
+    background: linear-gradient(180deg, rgba(240,244,255,0.6), rgba(255,255,255,0.5));
+    border: 1px dashed rgba(15,23,42,0.04);
+}

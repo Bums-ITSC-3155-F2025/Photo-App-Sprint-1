@@ -1,0 +1,145 @@
+:root {
+    --sidebar-bg: #ffffff;
+    --sidebar-border: #e6e6e6;
+    --item-hover: #f5f7fb;
+    --accent: #2563eb; /* blue-600 */
+    --text: #111827;
+    --muted: #6b7280;
+    --avatar-size: 36px;
+}
+
+/* Container for the user list in the sidebar */
+.user-list {
+    width: 260px;
+    min-width: 200px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: var(--text);
+    overflow: hidden;
+}
+
+/* Optional header area for title / controls */
+.user-list__header {
+    padding: 12px 14px;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 1px solid var(--sidebar-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* Scrollable list of users */
+.user-list__items {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 6px;
+}
+
+/* Individual user row */
+.user-list__item {
+    display: block;
+    margin: 4px 0;
+    border-radius: 8px;
+}
+
+/* Clickable area (link or button) */
+.user-list__link {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 6px;
+    transition: background-color 120ms ease, transform 120ms ease;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Avatar (image or placeholder) */
+.user-list__avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: 50%;
+    flex: 0 0 var(--avatar-size);
+    background-color: #eef2ff;
+    display: inline-block;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 14px;
+}
+
+/* Name and optional meta */
+.user-list__meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* allow ellipsis */
+}
+
+.user-list__name {
+    font-size: 14px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-list__sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Hover / focus */
+.user-list__link:hover,
+.user-list__link:focus-visible {
+    background: var(--item-hover);
+}
+
+/* Active/selected user styles */
+.user-list__item.is-active .user-list__link {
+    background: linear-gradient(90deg, rgba(37,99,235,0.06), transparent);
+    border-left: 3px solid var(--accent);
+    padding-left: 8px; /* compensate for left border (keeps spacing) */
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Custom scrollbar (WebKit) */
+.user-list__items::-webkit-scrollbar {
+    width: 10px;
+}
+.user-list__items::-webkit-scrollbar-thumb {
+    background: rgba(17,24,39,0.06);
+    border-radius: 8px;
+}
+.user-list__items::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Utility: visually hidden text for screen readers */
+.user-list__sr-only {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+    border: 0;
+    padding: 0;
+    margin: -1px;
+}

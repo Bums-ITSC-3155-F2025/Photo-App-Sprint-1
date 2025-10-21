@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Typography
+  Typography,Button, TextField, ImageList, ImageListItem
 } from '@mui/material';
 import './userPhotos.css';
 
@@ -11,8 +11,42 @@ import './userPhotos.css';
 class UserPhotos extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+        user_id : undefined,
+        photos: undefined
+    }
+}
 
-  }
+componentDidMount() {
+        user_id : this.props.match.params.userId,
+       this.handleUserChange(new_user_id);
+    }
+componentdidupdate() {
+    const new_user_id = this.props.match.params.userId;
+    const current_user_id = this.state.user_id;
+    if (current_user_id  !== new_user_id){
+        this.handleUserChange(new_user_id);
+    }
+}
+
+handleUserChange(user_id){
+    fetchModel("/photosOfUser/" + user_id)
+        .then((response) =>
+        {
+            this.setState({
+                user_id : user_id,
+                photos: response.data
+            });
+        });
+    fetchModel("/user/" + user_id)
+        .then((response) =>
+        {
+            const new_user = response.data;
+            const main_content = "User Photos for " + new_user.first_name + " " + new_user.last_name;
+            this.props.changeMainContent(main_content);
+        });
+}
+
 
   render() {
     return (
@@ -32,3 +66,5 @@ class UserPhotos extends React.Component {
 }
 
 export default UserPhotos;
+
+
