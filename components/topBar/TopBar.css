@@ -2,3 +2,34 @@
   height: 60;
   justify-content: 'center';
 }
+.topbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  gap: 12px;
+}
+
+/* left side: your name */
+.topbar-left {
+  font-size: 18px;
+  font-weight: 600;
+  user-select: none;
+}
+
+/* right side: context (e.g. "Photos of John Doe" or "John Doe") */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+/* optional emphasis for the dynamic name part */
+.topbar-right .context-name {
+  font-weight: 700;
+  margin-left: 4px;
+}
