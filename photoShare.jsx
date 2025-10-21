@@ -17,7 +17,15 @@ import UserPhotos from './components/userPhotos/userPhotos';
 class PhotoShare extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      main_content: undefined
+    };
+    this.changeMainContent = this.changeMainContent.bind(this);
   }
+
+  changeMainContent = (main_content) => {
+    this.setState({ main_content: main_content });
+  };
 
   render() {
     return (
@@ -25,7 +33,7 @@ class PhotoShare extends React.Component {
       <div>
       <Grid container spacing={8}>
         <Grid item xs={12}>
-          <TopBar/>
+          <TopBar main_content={this.state.main_content} />
         </Grid>
         <div className="main-topbar-buffer"/>
         <Grid item sm={3}>
@@ -36,7 +44,7 @@ class PhotoShare extends React.Component {
         <Grid item sm={9}>
           <Paper className="main-grid-item">
             <Switch>
-            <Route exact path="/"
+            <Route path="/users/:userId"
                 render={() => (
                 <Typography variant="body1">
                   Welcome to your photosharing app! This <a href="https://mui.com/components/paper/">Paper</a> component
@@ -49,12 +57,11 @@ class PhotoShare extends React.Component {
                 )}
               />
               <Route path="/users/:userId"
-                render={ props => <UserDetail {...props} /> }
+                render={ props => <UserDetail {...props} changeMainContent={this.changeMainContent} /> }
               />
               <Route path="/photos/:userId"
-                render ={ props => <UserPhotos {...props} /> }
+                render ={ props => <UserPhotos {...props} changeMainContent={this.changeMainContent} /> }
               />
-              <Route path="/users" component={UserList}  />
             </Switch>
           </Paper>
         </Grid>
