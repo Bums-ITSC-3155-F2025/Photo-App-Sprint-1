@@ -3,6 +3,7 @@ import {
   Typography
 } from '@mui/material';
 import './userDetail.css';
+import fetchModel from '../../lib/fetchModelData';
 
 
 /**
