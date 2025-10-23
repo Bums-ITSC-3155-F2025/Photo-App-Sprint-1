@@ -5,7 +5,7 @@ import './TopBar.css';
 import fetchModel from '../../lib/fetchModelData';
 
 // Set your name for the left side of the TopBar
-const AUTHOR_NAME = 'Aidan Weyandt';
+const AUTHOR_NAME = 'Team Bums';
 
 /**
  * TopBar - shows app title, your name (left), and context + version (right)
