@@ -1,7 +1,7 @@
 import fetchModel from '../../lib/fetchModelData.js';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Typography, Divider } from '@mui/material';
 import './userPhotos.css';
 
 /**
@@ -49,19 +49,40 @@ class UserPhotos extends React.Component {
   }
 
   render() {
+    const { photos } = this.state;
+
+    if (!photos) {
+      return <Typography variant="body1">Loading photos...</Typography>;
+    }
+
     return (
-      <Typography variant="body1">
-        This should be the UserPhotos view of the PhotoShare app. Since
-        it is invoked from React Router the params from the route will be
-        in property match. So this should show details of user:
-        {this.props.match?.params?.userId}. You can fetch the model for the user from
-        window.models.photoOfUserModel(userId):
-        <Typography variant="caption">
-          {JSON.stringify(
-            window.models.photoOfUserModel(this.props.match?.params?.userId)
-          )}
-        </Typography>
-      </Typography>
+      <div className="user-photos">
+        {photos.map((photo) => (
+          <div key={photo._id} className="photo">
+            <div>
+              <img src={`images/${photo.file_name}`} alt={photo.file_name} />
+            </div>
+            <div className="photo-info">Taken: {photo.date_time}</div>
+            {photo.comments && photo.comments.length > 0 && (
+              <div className="comments">
+                <Typography variant="subtitle2">Comments</Typography>
+                <Divider style={{ margin: '6px 0 10px' }} />
+                {photo.comments.map((c) => (
+                  <div key={c._id} className="comment">
+                    <div>
+                      <a href={`#/users/${c.user._id}`}>
+                        {c.user.first_name} {c.user.last_name}
+                      </a>{' '}
+                      on {c.date_time}
+                    </div>
+                    <div>{c.comment}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     );
   }
 }
