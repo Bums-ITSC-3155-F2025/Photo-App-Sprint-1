@@ -1,4 +1,4 @@
-import { fetchModel } from '../../lib/fetchModelData.js';
+import fetchModel from '../../lib/fetchModelData.js';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Typography } from '@mui/material';

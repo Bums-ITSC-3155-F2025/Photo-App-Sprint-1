@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { fetchModel } from '../../lib/fetchModelData.js';
+import fetchModel from '../../lib/fetchModelData.js';
 import {
   Divider,
   List,
