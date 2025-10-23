@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   HashRouter, Route, Switch
-} from 'react-router-dom'; // ✅ change: use Switch, not Routes
+} from 'react-router-dom'; 
 import {
   Grid, Typography, Paper
 } from '@mui/material';
