@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { fetchModel } from '../../lib/fetchModelData.js';
 import {
   Divider,
   List,
@@ -23,7 +25,7 @@ class UserList extends React.Component {
 componentDidMount() {
   this.handleUserListChange();
 }
-componentdidupdate() {
+componentDidUpdate() {
   const new_user_id = this.props.match.params.userId;
   const current_user_id = this.state.user?._id;
   if (current_user_id  !== new_user_id){
@@ -84,4 +86,14 @@ handleUserListChange(){
 }
 
 export default UserList;
+
+UserList.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      userId: PropTypes.string,
+    }),
+  }),
+  changeMainContent: PropTypes.func,
+};
+
 
