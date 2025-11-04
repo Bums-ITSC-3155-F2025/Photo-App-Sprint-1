@@ -2,13 +2,12 @@
     --sidebar-bg: #ffffff;
     --sidebar-border: #e6e6e6;
     --item-hover: #f5f7fb;
-    --accent: #2563eb; /* blue-600 */
+    --accent: #2563eb; 
     --text: #111827;
     --muted: #6b7280;
     --avatar-size: 36px;
 }
 
-/* Container for the user list in the sidebar */
 .user-list {
     width: 260px;
     min-width: 200px;
@@ -23,7 +22,6 @@
     overflow: hidden;
 }
 
-/* Optional header area for title / controls */
 .user-list__header {
     padding: 12px 14px;
     font-weight: 600;
