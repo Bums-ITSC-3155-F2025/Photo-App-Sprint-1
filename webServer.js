@@ -46,7 +46,7 @@ const SchemaInfo = require("./schema/schemaInfo.js");
 
 // XXX - Your submission should work without this line. Comment out or delete
 // this line for tests and before submission!
-const models = require("./modelData/photoApp.js").models;
+//const models = require("./modelData/photoApp.js").models;
 mongoose.set("strictQuery", false);
 mongoose.connect("mongodb://127.0.0.1/project6", {
   useNewUrlParser: true,
