@@ -10,4 +10,4 @@ Aidan Weyandt
 
 
 ## Purpose
-- This is our demonstration of the creation of a Photo App Sprint. Scrum phisolpghy was used in the creation of this project
+- This is our demonstration of the creation of a Photo App Sprint. Scrum philosophy was used in the creation of this project
