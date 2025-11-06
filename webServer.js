@@ -174,7 +174,7 @@ app.get("/user/:id", function (request, response) {
     }
     response.end(JSON.stringify(user[0]));
   });
-})
+});
 
 /**
  * URL /photosOfUser/:id - Returns the Photos for User (id).

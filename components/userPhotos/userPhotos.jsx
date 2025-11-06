@@ -1,9 +1,8 @@
-import fetchModel from '../../lib/fetchModelData.js';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types'; // ✅ external before local
 import { Typography, Divider } from '@mui/material';
+import fetchModel from '../../lib/fetchModelData.js'; // ✅ local after externals
 import './userPhotos.css';
-
 /**
  * Define UserPhotos, a React component of project #5
  */
@@ -40,10 +39,7 @@ class UserPhotos extends React.Component {
     fetchModel('/user/' + user_id).then((response) => {
       const new_user = response.data;
       const main_content =
-        'User Photos for ' +
-        new_user.first_name +
-        ' ' +
-        new_user.last_name;
+        'User Photos for ' + new_user.first_name + ' ' + new_user.last_name;
       this.props.changeMainContent(main_content);
     });
   }
@@ -94,6 +90,12 @@ UserPhotos.propTypes = {
     }),
   }),
   changeMainContent: PropTypes.func,
+};
+
+// ✅ add defaultProps to satisfy ESLint react/require-default-props
+UserPhotos.defaultProps = {
+  match: { params: { userId: '' } },
+  changeMainContent: () => {},
 };
 
 export default UserPhotos;

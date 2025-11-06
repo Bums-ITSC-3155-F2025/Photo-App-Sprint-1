@@ -1,8 +1,9 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Box } from '@mui/material';
-import PropTypes from 'prop-types';
-import './TopBar.css';
-import fetchModel from '../../lib/fetchModelData';
+import PropTypes from 'prop-types';          // ✅ external
+import { AppBar, Toolbar, Typography, Box } from '@mui/material'; // ✅ external
+import fetchModel from '../../lib/fetchModelData.js';        // ✅ local
+import './TopBar.css';                                       // ✅ local (style last)
+
 
 // Set your name for the left side of the TopBar
 const AUTHOR_NAME = 'Team Bums';
@@ -65,7 +66,7 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  main_content: PropTypes.string,
+  main_content: PropTypes.string.isRequired,
 };
 
 export default TopBar;
