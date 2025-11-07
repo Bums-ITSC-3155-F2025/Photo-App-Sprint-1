@@ -73,7 +73,7 @@ app.get("/", function (request, response) {
  * /test/counts - Returns an object with the counts of the different collections
  *                in JSON format.
  */
-app.get("/test/:p1", function (request, response) {
+app.get("/test/:p1?", function (request, response) {
   // Express parses the ":p1" from the URL and returns it in the request.params
   // objects.
   console.log("/test called with param1 = ", request.params.p1);
@@ -87,7 +87,7 @@ app.get("/test/:p1", function (request, response) {
       if (err) {
         // Query returned an error. We pass it back to the browser with an
         // Internal Service Error (500) error code.
-        console.error("Error in /user/info:", err);
+        console.error("Error in /test/info:", err);
         response.status(500).send(JSON.stringify(err));
         return;
       }
@@ -143,7 +143,7 @@ app.get("/test/:p1", function (request, response) {
  * URL /user/list - Returns all the User objects.
  */
 app.get("/user/list", function (request, response) {
-  User.find({}, {_id: 1, first_name: 1, last_name: 1}, function (err, users) {
+  User.find({}, { _id: 1, first_name: 1, last_name: 1 }, function (err, users) {
     if (err) {
       console.error("Error in /user/list:", err);
       response.status(500).send(JSON.stringify(err));
@@ -153,9 +153,9 @@ app.get("/user/list", function (request, response) {
       response.status(400).send("Missing users");
       return;
     }
-  response.end(JSON.stringify(users));
-}); // Closing brace for /user/list route
-}); // Add this closing brace
+    response.end(JSON.stringify(users));
+  }); // Close User.find callback
+}); // Close /user/list route
 
 /**
  * URL /user/:id - Returns the information for User (id).

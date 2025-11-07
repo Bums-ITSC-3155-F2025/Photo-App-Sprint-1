@@ -5,6 +5,8 @@
   "description": "Project 6: Appserver and Database (React)",
   "main": "webServer.js",
   "scripts": {
+    "start": "node webServer.js",
+    "dev": "nodemon webServer.js",
     "build": "webpack --devtool eval-cheap-module-source-map",
     "build:w": "webpack --devtool eval-cheap-module-source-map --watch",
     "lint": "eslint webServer.js loadDatabase.js *.jsx components/*/*.jsx || exit 0"
