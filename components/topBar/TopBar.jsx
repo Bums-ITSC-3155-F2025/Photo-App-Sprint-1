@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import './topBar.css';
 
-axios.defaults.withCredentials = true; // required for session cookies
+axios.defaults.withCredentials = true;
 
 class TopBar extends React.Component {
   constructor(props) {
@@ -27,29 +27,31 @@ class TopBar extends React.Component {
   render() {
     const { currentUser, onUploadPhoto } = this.props;
 
+    // Message to display in top bar 
+    const loginMessage = currentUser
+      ? `Hi ${currentUser.first_name}`
+      : "Please Login";
+
     return (
       <AppBar className="topbar-appbar" position="absolute">
         <Toolbar className="topbar-toolbar">
 
-          {/* LEFT SIDE TITLE */}
+          {/* LEFT: App title */}
           <Typography variant="h5" className="topbar-title">
             PhotoShare
           </Typography>
 
-          {/* CENTER MESSAGE */}
+          {/* CENTER: Message (NOW controlled by top bar itself) */}
           <Typography variant="h6" className="topbar-message">
-            {this.props.main_content}
+            {loginMessage}
           </Typography>
 
-          {/* RIGHT SIDE USER CONTROLS */}
+          {/* RIGHT: Controls */}
           <div className="topbar-controls">
+
             {currentUser ? (
               <>
-                <Typography variant="body1" className="topbar-greeting">
-                  Hi {currentUser.first_name}
-                </Typography>
-
-                {/* Add Photo Button */}
+                {/* Add Photo */}
                 <Button
                   variant="contained"
                   component="label"
@@ -64,7 +66,7 @@ class TopBar extends React.Component {
                   />
                 </Button>
 
-                {/* Logout Button */}
+                {/* Logout */}
                 <Button
                   variant="outlined"
                   className="topbar-button"
@@ -79,6 +81,7 @@ class TopBar extends React.Component {
               </Typography>
             )}
           </div>
+
         </Toolbar>
       </AppBar>
     );
@@ -86,10 +89,10 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  main_content: PropTypes.string,
   currentUser: PropTypes.object,
   onUploadPhoto: PropTypes.func,
   onLogout: PropTypes.func
 };
 
 export default TopBar;
+
