@@ -1,0 +1,120 @@
+/* Container */
+.login-register-container {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: rgba(0,0,0,0.1) 0px 2px 10px;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  /* Titles */
+  .login-register-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .login-section h2,
+  .register-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 18px 0;
+    color: #222;
+  }
+  
+  /* Form styling */
+  .login-section form div,
+  .register-section form div {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #444;
+  }
+  
+  input,
+  textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border-color: #1976d2;
+    box-shadow: 0px 0px 4px rgba(25, 118, 210, 0.4);
+    outline: none;
+  }
+  
+  /* Buttons */
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background-color: #1976d2;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #125ea8;
+  }
+  
+  /* Divider */
+  hr {
+    margin: 30px 0;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Error + success messages */
+  .error-msg {
+    color: #d32f2f;
+    background: #ffe6e6;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 6px 0 0;
+  }
+  
+  .success-msg {
+    color: #2e7d32;
+    background: #e7f7e7;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 6px 0 0;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 500px) {
+    .login-register-container {
+      padding: 20px;
+      margin: 20px;
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  

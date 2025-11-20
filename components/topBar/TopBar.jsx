@@ -1,64 +1,84 @@
 import React from 'react';
-import PropTypes from 'prop-types';          // ✅ external
-import { AppBar, Toolbar, Typography, Box } from '@mui/material'; // ✅ external
-import fetchModel from '../../lib/fetchModelData.js';        // ✅ local
-import './TopBar.css';                                       // ✅ local (style last)
+import PropTypes from 'prop-types';
+import axios from 'axios';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import './topBar.css';
 
+axios.defaults.withCredentials = true; // required for session cookies
 
-// Set your name for the left side of the TopBar
-const AUTHOR_NAME = 'Team Bums';
-
-/**
- * TopBar - shows app title, your name (left), and context + version (right)
- */
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      app_info: undefined,
-    };
+
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchAppInfo();
-  }
-
-  fetchAppInfo() {
-    if (!this.state.app_info) {
-      fetchModel('/test/info')
-        .then((response) => {
-          this.setState({ app_info: response.data });
-        })
-        .catch(() => {
-          // leave app_info undefined on error; keep UI functional
-        });
-    }
+  handleLogout() {
+    axios.post('/admin/logout')
+      .then(() => {
+        if (this.props.onLogout) this.props.onLogout();
+        window.location = '#/login-register';
+      })
+      .catch(() => {
+        console.log('Logout failed');
+      });
   }
 
   render() {
-    const { main_content } = this.props;
-    const version = this.state.app_info ? this.state.app_info.__v : undefined;
+    const { currentUser, onUploadPhoto } = this.props;
 
     return (
-      <AppBar className="topbar-appBar" position="absolute">
-        <Toolbar className="topbar-container">
-          <Box className="topbar-left">
-            <Typography variant="h6" color="inherit">
-              {AUTHOR_NAME}
-            </Typography>
-          </Box>
-          <Box className="topbar-right">
-            {main_content && (
-              <Typography variant="subtitle1" color="inherit">
-                {main_content}
+      <AppBar className="topbar-appbar" position="absolute">
+        <Toolbar className="topbar-toolbar">
+
+          {/* LEFT SIDE TITLE */}
+          <Typography variant="h5" className="topbar-title">
+            PhotoShare
+          </Typography>
+
+          {/* CENTER MESSAGE */}
+          <Typography variant="h6" className="topbar-message">
+            {this.props.main_content}
+          </Typography>
+
+          {/* RIGHT SIDE USER CONTROLS */}
+          <div className="topbar-controls">
+            {currentUser ? (
+              <>
+                <Typography variant="body1" className="topbar-greeting">
+                  Hi {currentUser.first_name}
+                </Typography>
+
+                {/* Add Photo Button */}
+                <Button
+                  variant="contained"
+                  component="label"
+                  className="topbar-button"
+                >
+                  Add Photo
+                  <input
+                    hidden
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => onUploadPhoto(e)}
+                  />
+                </Button>
+
+                {/* Logout Button */}
+                <Button
+                  variant="outlined"
+                  className="topbar-button"
+                  onClick={this.handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Typography variant="body1" className="topbar-login-text">
+                Please Login
               </Typography>
             )}
-            {version !== undefined && (
-              <Typography variant="caption" color="inherit" style={{ marginLeft: 8 }}>
-                v{version}
-              </Typography>
-            )}
-          </Box>
+          </div>
         </Toolbar>
       </AppBar>
     );
@@ -66,8 +86,10 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  main_content: PropTypes.string.isRequired,
+  main_content: PropTypes.string,
+  currentUser: PropTypes.object,
+  onUploadPhoto: PropTypes.func,
+  onLogout: PropTypes.func
 };
 
 export default TopBar;
-
