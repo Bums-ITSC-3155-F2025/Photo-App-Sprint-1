@@ -25,6 +25,8 @@ const userDetailProperties = [
   "location",
   "description",
   "occupation",
+  "login_name",
+  "password",
 ];
 // Valid properties of the photo model
 const photoProperties = ["file_name", "date_time", "user_id", "_id", "comments"];
