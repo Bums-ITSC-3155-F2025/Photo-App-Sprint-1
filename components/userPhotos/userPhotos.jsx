@@ -29,11 +29,19 @@ class UserPhotos extends React.Component {
         this.handleUserChange(new_user_id);
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         const new_user_id = this.props.match.params.userId;
         const current_user_id = this.state.user_id;
-        if (current_user_id  !== new_user_id){
+
+        // Reload when viewing a different user
+        if (current_user_id !== new_user_id) {
             this.handleUserChange(new_user_id);
+            return;
+        }
+
+        // Reload when a new photo is uploaded for the current user
+        if (this.props.photoRefreshToken !== prevProps.photoRefreshToken && current_user_id) {
+            this.handleUserChange(current_user_id);
         }
     }
 

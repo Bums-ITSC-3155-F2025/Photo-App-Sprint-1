@@ -1,5 +1,3 @@
-"use strict";
-
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 mongoose.set("strictQuery", false);
@@ -52,14 +50,14 @@ app.get("/session", async (req, res) => {
     const user = await User.findById(req.session.user_id).exec();
     if (!user) return res.status(401).send("No active session");
 
-    res.status(200).json({
+    return res.status(200).json({
       _id: user._id,
       first_name: user.first_name,
       last_name: user.last_name,
       login_name: user.login_name
     });
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 });
 
@@ -84,8 +82,16 @@ app.post("/user", async (req, res) => {
     occupation
   });
 
-  newUser.save()
-    .then(() => res.status(200).send("User registered"))
+  return newUser.save()
+    .then((savedUser) => res.status(200).json({
+      _id: savedUser._id,
+      login_name: savedUser.login_name,
+      first_name: savedUser.first_name,
+      last_name: savedUser.last_name,
+      location: savedUser.location,
+      description: savedUser.description,
+      occupation: savedUser.occupation
+    }))
     .catch((err) => res.status(500).send(err));
 });
 
@@ -104,7 +110,7 @@ app.post("/admin/login", async (req, res) => {
 
   req.session.user_id = user._id;
 
-  res.status(200).json({
+  return res.status(200).json({
     _id: user._id,
     first_name: user.first_name,
     last_name: user.last_name,
@@ -117,7 +123,7 @@ app.post("/admin/logout", (req, res) => {
   if (!req.session.user_id) {
     return res.status(400).send("Not logged in");
   }
-  req.session.destroy(() => {
+  return req.session.destroy(() => {
     res.status(200).send("Logged out");
   });
 });
@@ -143,7 +149,7 @@ app.use((req, res, next) => {
     return res.status(401).send("Unauthorized");
   }
 
-  next();
+  return next();
 });
 
 /* ----------------------- PROTECTED ROUTES ----------------------- */
@@ -152,7 +158,7 @@ app.use((req, res, next) => {
 app.get("/user/list", (req, res) => {
   User.find({}, { first_name: 1, last_name: 1 }, (err, users) => {
     if (err) return res.status(500).send(err);
-    res.status(200).send(users);
+    return res.status(200).send(users);
   });
 });
 
@@ -161,7 +167,7 @@ app.get("/user/:id", (req, res) => {
   User.findById(req.params.id, { __v: 0 }, (err, user) => {
     if (err) return res.status(500).send(err);
     if (!user) return res.status(400).send("User not found");
-    res.status(200).send(user);
+    return res.status(200).send(user);
   });
 });
 
@@ -203,9 +209,9 @@ app.get("/photosOfUser/:id", async (req, res) => {
       { $project: { commentUsers: 0 } }
     ]);
 
-    res.status(200).send(photos);
+    return res.status(200).send(photos);
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 });
 
@@ -226,15 +232,15 @@ app.post("/commentsOfPhoto/:photo_id", async (req, res) => {
     });
 
     await photo.save();
-    res.status(200).send("Comment added");
+    return res.status(200).send("Comment added");
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 });
 
 /* UPLOAD PHOTO */
 app.post("/photos/new", (req, res) => {
-  processFormBody(req, res, function (err) {
+  return processFormBody(req, res, function (err) {
     if (err || !req.file) {
       return res.status(400).send("No file uploaded");
     }
@@ -242,7 +248,7 @@ app.post("/photos/new", (req, res) => {
     const timestamp = new Date().valueOf();
     const filename = "U" + timestamp + req.file.originalname;
 
-    fs.writeFile("./images/" + filename, req.file.buffer, async function (writeErr) {
+    return fs.writeFile("./images/" + filename, req.file.buffer, async function (writeErr) {
       if (writeErr) return res.status(500).send(writeErr);
 
       const newPhoto = new Photo({
@@ -252,7 +258,7 @@ app.post("/photos/new", (req, res) => {
         comments: []
       });
 
-      newPhoto.save()
+      return newPhoto.save()
         .then(() => res.status(200).send("Photo uploaded"))
         .catch((saveErr) => res.status(500).send(saveErr));
     });
@@ -264,25 +270,25 @@ app.get("/test/:p1?", (req, res) => {
   const param = req.params.p1 || "info";
 
   if (param === "info") {
-    SchemaInfo.find({}, (err, info) => {
+    return SchemaInfo.find({}, (err, info) => {
       if (err) return res.status(500).send(err);
       if (!info.length) return res.status(400).send("Missing SchemaInfo");
-      res.status(200).send(info[0]);
+      return res.status(200).send(info[0]);
     });
   } else if (param === "counts") {
-    Promise.all([
+    return Promise.all([
       User.countDocuments({}),
       Photo.countDocuments({}),
       SchemaInfo.countDocuments({})
     ]).then(([user, photo, schemaInfo]) => {
-      res.status(200).send({ user, photo, schemaInfo });
+      return res.status(200).send({ user, photo, schemaInfo });
     });
   } else {
-    res.status(400).send("Bad param");
+    return res.status(400).send("Bad param");
   }
 });
 
 /* ----------------------- SERVER START ----------------------- */
-const server = app.listen(3000, () => {
+app.listen(3000, () => {
   console.log("Listening at http://localhost:3000");
 });

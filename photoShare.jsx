@@ -20,7 +20,8 @@ class PhotoShare extends React.Component {
     this.state = {
       main_content: 'Welcome!',
       currentUser: null,
-      loadingSession: true
+      loadingSession: true,
+      photoRefreshToken: 0
     };
 
     this.changeMainContent = this.changeMainContent.bind(this);
@@ -62,7 +63,8 @@ class PhotoShare extends React.Component {
   // When logout happens
   handleLogout() {
     this.setState({
-      currentUser: null
+      currentUser: null,
+      photoRefreshToken: 0
     });
   }
 
@@ -76,11 +78,13 @@ class PhotoShare extends React.Component {
 
     axios.post('/photos/new', formData)
       .then(() => {
-        alert('Photo uploaded!');
+        console.log('Photo uploaded!');
+        this.setState((prevState) => ({
+          photoRefreshToken: prevState.photoRefreshToken + 1
+        }));
       })
       .catch((err) => {
         console.log('UPLOAD ERROR:', err);
-        alert('Upload failed.');
       });
   }
 
@@ -127,8 +131,8 @@ class PhotoShare extends React.Component {
                   path="/login-register"
                   render={() => (
                     currentUser
-                      ? <Redirect to={`/users/${currentUser._id}`} />
-                      : <LoginRegister onLoginSuccess={this.handleLoginSuccess} />
+                      ? (<Redirect to={`/users/${currentUser._id}`} />)
+                      : (<LoginRegister onLoginSuccess={this.handleLoginSuccess} />)
                   )}
                 />
 
@@ -136,35 +140,35 @@ class PhotoShare extends React.Component {
                 <Route
                   exact
                   path="/"
-                  render={() =>
-                    currentUser ? (
-                      <Typography>Welcome to PhotoShare!</Typography>
-                    ) : (
-                      <Redirect to="/login-register" />
-                    )
-                  }
+                  render={() => (
+                    currentUser
+                      ? (<Typography>Welcome to PhotoShare!</Typography>)
+                      : (<Redirect to="/login-register" />)
+                  )}
                 />
 
                 <Route
                   path="/users/:userId"
-                  render={(props) =>
-                    currentUser ? (
-                      <UserDetail {...props} changeMainContent={this.changeMainContent} />
-                    ) : (
-                      <Redirect to="/login-register" />
-                    )
-                  }
+                  render={(props) => (
+                    currentUser
+                      ? (<UserDetail {...props} changeMainContent={this.changeMainContent} />)
+                      : (<Redirect to="/login-register" />)
+                  )}
                 />
 
                 <Route
                   path="/photos/:userId"
-                  render={(props) =>
-                    currentUser ? (
-                      <UserPhotos {...props} changeMainContent={this.changeMainContent} />
-                    ) : (
-                      <Redirect to="/login-register" />
-                    )
-                  }
+                  render={(props) => (
+                    currentUser
+                      ? (
+                        <UserPhotos
+                          {...props}
+                          changeMainContent={this.changeMainContent}
+                          photoRefreshToken={this.state.photoRefreshToken}
+                        />
+                      )
+                      : (<Redirect to="/login-register" />)
+                  )}
                 />
 
                 {/* DEFAULT: redirect to login */}

@@ -121,9 +121,9 @@ class LoginRegister extends React.Component {
               />
             </div>
 
-            {this.state.loginError &&
+            {this.state.loginError && (
               <div className="error-msg">{this.state.loginError}</div>
-            }
+            )}
 
             <button type="submit">Log In</button>
           </form>
@@ -213,13 +213,13 @@ class LoginRegister extends React.Component {
               />
             </div>
 
-            {this.state.regError &&
+            {this.state.regError && (
               <div className="error-msg">{this.state.regError}</div>
-            }
+            )}
 
-            {this.state.regSuccess &&
+            {this.state.regSuccess && (
               <div className="success-msg">{this.state.regSuccess}</div>
-            }
+            )}
 
             <button type="submit">Register Me</button>
           </form>

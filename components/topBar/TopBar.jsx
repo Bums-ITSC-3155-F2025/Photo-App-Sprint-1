@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import './topBar.css';
+import './TopBar.css';
 
 axios.defaults.withCredentials = true;
 
@@ -89,9 +89,20 @@ class TopBar extends React.Component {
 }
 
 TopBar.propTypes = {
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.shape({
+    _id: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    login_name: PropTypes.string
+  }),
   onUploadPhoto: PropTypes.func,
   onLogout: PropTypes.func
+};
+
+TopBar.defaultProps = {
+  currentUser: null,
+  onUploadPhoto: () => {},
+  onLogout: () => {}
 };
 
 export default TopBar;
