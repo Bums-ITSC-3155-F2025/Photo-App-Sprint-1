@@ -84,6 +84,19 @@ class UserPhotos extends React.Component {
             current_photo_id: photo_id
         });
     };
+    handleLikePhoto = (event) => {
+        const photo_id = event.target.attributes.photo_id.value;
+        const user_id = this.state.user_id;
+
+        axios.post("/likePhoto/" + photo_id, { user_id })
+            .then(() => {
+                // Optionally, you can refresh the photos or update the state here
+                console.log('Photo liked successfully');
+            })
+            .catch(error => {
+                console.log('Error liking photo:', error);
+            });
+    };
 
     handleCancelAddComment = () => {
         this.setState({
@@ -168,6 +181,10 @@ class UserPhotos extends React.Component {
                                 <Button photo_id={item._id} variant="contained" onClick={this.handleShowAddComment}>
                                     Add Comment
                                 </Button>
+                                <Button photo_id={item._id} variant="contained" onClick={this.handleLikePhoto}>
+                                    Like
+                                </Button>
+
                             </div>
                         </div>
                     )) : (

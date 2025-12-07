@@ -265,6 +265,36 @@ app.post("/photos/new", (req, res) => {
   });
 });
 
+/* TOGGLE LIKE */
+app.post("/likePhoto/:photo_id", async (req, res) => {
+  try {
+    const photo = await Photo.findById(req.params.photo_id);
+    if (!photo) return res.status(400).send("Photo not found");
+
+    const userId = req.session.user_id.toString();
+    const index = photo.likes.findIndex(id => id.toString() === userId);
+
+    if (index >= 0) {
+      // User already liked → Unlike
+      photo.likes.splice(index, 1);
+    } else {
+      // User has not liked → Like
+      photo.likes.push(userId);
+    }
+
+    await photo.save();
+    return res.status(200).json({
+      likeCount: photo.likes.length,
+      liked: index < 0
+    });
+
+  } catch (err) {
+    console.error("LIKE ERROR", err);
+    return res.status(500).send(err);
+  }
+});
+
+
 /* ----------------------- TEST ROUTES ----------------------- */
 app.get("/test/:p1?", (req, res) => {
   const param = req.params.p1 || "info";
