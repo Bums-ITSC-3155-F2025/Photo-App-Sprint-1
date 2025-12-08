@@ -255,7 +255,8 @@ app.post("/photos/new", (req, res) => {
         file_name: filename,
         date_time: new Date(),
         user_id: req.session.user_id,
-        comments: []
+        comments: [],
+        likes: []
       });
 
       return newPhoto.save()
@@ -268,24 +269,33 @@ app.post("/photos/new", (req, res) => {
 /* TOGGLE LIKE */
 app.post("/likePhoto/:photo_id", async (req, res) => {
   try {
+    const userId = req.session.user_id;
+    if (!userId) return res.status(401).send("Unauthorized");
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.photo_id)) {
+      return res.status(400).send("Invalid photo id");
+    }
+
     const photo = await Photo.findById(req.params.photo_id);
     if (!photo) return res.status(400).send("Photo not found");
 
-    const userId = req.session.user_id.toString();
-    const index = photo.likes.findIndex(id => id.toString() === userId);
+    // Ensure likes array exists on older docs
+    photo.likes = photo.likes || [];
 
-    if (index >= 0) {
-      // User already liked → Unlike
-      photo.likes.splice(index, 1);
+    const userIdStr = userId.toString();
+    const index = photo.likes.findIndex((id) => id.toString() === userIdStr);
+    const liked = index < 0;
+
+    if (liked) {
+      photo.likes.push(new mongoose.Types.ObjectId(userIdStr));
     } else {
-      // User has not liked → Like
-      photo.likes.push(userId);
+      photo.likes.splice(index, 1);
     }
 
     await photo.save();
     return res.status(200).json({
       likeCount: photo.likes.length,
-      liked: index < 0
+      liked
     });
 
   } catch (err) {

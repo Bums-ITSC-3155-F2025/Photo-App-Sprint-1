@@ -27,12 +27,11 @@ const photoSchema = new mongoose.Schema({
     }
   ],
 
-  // Users who liked the photo — prevents double likes
-  likes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+  // Users who liked the photo - prevents double likes
+  likes: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     default: []
-  }]
+  }
 });
 
 module.exports = mongoose.model("Photo", photoSchema);

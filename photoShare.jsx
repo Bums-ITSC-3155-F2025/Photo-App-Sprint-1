@@ -165,6 +165,7 @@ class PhotoShare extends React.Component {
                           {...props}
                           changeMainContent={this.changeMainContent}
                           photoRefreshToken={this.state.photoRefreshToken}
+                          currentUser={currentUser}
                         />
                       )
                       : (<Redirect to="/login-register" />)
